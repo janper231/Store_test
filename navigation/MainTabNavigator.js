@@ -4,23 +4,22 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 
 import TabBarIcon from '../components/TabBarIcon';
-import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
-import SettingsScreen from '../screens/SettingsScreen';
+import Productos from '../screens/Productos';
+import Compras from '../screens/Compras';
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
   default: {},
 });
 
-const HomeStack = createStackNavigator(
+const opcion1 = createStackNavigator(
   {
-    Home: HomeScreen,
+    Productos: Productos,
   },
   config
 );
 
-HomeStack.navigationOptions = {
+opcion1.navigationOptions = {
   tabBarLabel: 'Productos',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
@@ -34,44 +33,30 @@ HomeStack.navigationOptions = {
   ),
 };
 
-HomeStack.path = '';
+opcion1.path = '';
 
-const LinksStack = createStackNavigator(
+const opcion2 = createStackNavigator(
   {
-    Links: LinksScreen,
+    Compras: Compras,
   },
   config
 );
 
-LinksStack.navigationOptions = {
-  tabBarLabel: 'Categorias',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'} />
-  ),
-};
-
-LinksStack.path = '';
-
-const SettingsStack = createStackNavigator(
-  {
-    Settings: SettingsScreen,
-  },
-  config
-);
-
-SettingsStack.navigationOptions = {
+opcion2.navigationOptions = {
   tabBarLabel: 'Compras',
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-cart' : 'md-cart'} />
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === 'ios' ? 'ios-cart' : 'md-cart'}
+    />
   ),
 };
 
-SettingsStack.path = '';
+opcion2.path = '';
 
 const tabNavigator = createBottomTabNavigator({
-  HomeStack,
-  LinksStack,
-  SettingsStack,
+  opcion1,
+  opcion2,
 });
 
 tabNavigator.path = '';

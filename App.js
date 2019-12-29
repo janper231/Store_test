@@ -2,21 +2,19 @@ import React from 'react';
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { Platform, StatusBar, View } from 'react-native';
 import AppNavigator from './navigation/AppNavigator';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import { Root } from 'native-base';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-});
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isReady: false,
+      nuevo_producto: false,
     };
   }
 
@@ -34,10 +32,12 @@ export default class App extends React.Component {
       return <AppLoading />;
     }
     return (
-      <View style={styles.container}>
-        {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-        <AppNavigator />
-      </View>
+      <Root>
+        <View style={{ flex: 1 }} >
+          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+          <AppNavigator />
+        </View>
+      </Root>
     );
   }
 }

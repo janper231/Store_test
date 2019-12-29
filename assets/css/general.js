@@ -1,14 +1,11 @@
 import React from 'react';
-import {
-    Platform,
-    StyleSheet,
-} from 'react-native';
+import { Platform, StyleSheet, } from 'react-native';
 
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        top: "5%",
+        top: "3%",
     },
     developmentModeText: {
         marginBottom: 20,
