@@ -40,8 +40,28 @@ export async function EliminarCompra(data, infoAction) {
     infoAction();
 }
 
-export function EditarCompra(data) {
-    console.log(data);
+export async function EditarCompra(data, infoAction, option) {
+    if (option === "add") {
+        await AgregarCompra(data)
+            .then(() => {
+                infoAction();
+            })
+    } else {
+        if (data.cantidad > 1) {
+            var value = await AsyncStorage.getItem('compra');
+            value = JSON.parse(value)
+            value = value.map(compra => {
+                if (compra.id === data.id) {
+                    compra.cantidad -= 1;
+                }
+                return compra;
+            });
+            await AsyncStorage.setItem('compra', JSON.stringify(value));
+            infoAction();
+        } else {
+            EliminarCompra(data, infoAction);
+        }
+    }
 }
 
 export async function EliminarTodo(infoAction) {
@@ -50,11 +70,21 @@ export async function EliminarTodo(infoAction) {
     infoAction();
 }
 
-export async function FinalizarCompra() {
-    alert("Gracias por su compra");
+export async function FinalizarCompra(infoAction) {
     let datos = await AsyncStorage.getItem("compra");
+    let historial = await AsyncStorage.getItem("historial_compras");
     datos = JSON.parse(datos);
-    datos['fecha'] = Date.now();
-    console.log(datos);
-    //AsyncStorage.removeItem("compra");
+    let new_data = [
+        {
+            fecha: new Date(),
+            compra: datos
+        }
+    ];
+    if (historial !== null) {
+        new_data.push(JSON.parse(historial));
+    }
+    await AsyncStorage.setItem('historial_compras', JSON.stringify(new_data))
+    await AsyncStorage.removeItem("compra");
+    Toast.show({ text: "Gracias por su compra!", type: "success" })
+    infoAction();
 }

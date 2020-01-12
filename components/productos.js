@@ -4,6 +4,7 @@ import productos from '../data/products.json';
 import { AgregarCompra } from './carrito';
 
 export function ListaProductos(level) {
+    console.log(level)
     return (
         Object.values(productos.products).map((data, i) => {
             if (data.quantity > 0 && data.sublevel_id === level.id) {

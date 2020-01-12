@@ -4,7 +4,6 @@ import { Content, Card, CardItem, Body, Text, Button, Icon, Left, Spinner, H1, R
 import { withNavigationFocus } from 'react-navigation';
 import { EliminarCompra, EditarCompra, EliminarTodo, FinalizarCompra } from '../components/carrito';
 
-
 class SettingsScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -54,9 +53,16 @@ class SettingsScreen extends React.Component {
                           <Text> Cantidad : {data.cantidad} Unidades. </Text>
                           <Text> Precio : {data.price}  </Text>
                         </Body>
-                        <Button primary rounded onPress={() => { EditarCompra(data) }}>
-                          <Icon name='md-create' />
+                        <Button success rounded onPress={() => { EditarCompra(data, this.state.infoAction, "add") }}>
+                          <Icon name='md-add' />
                         </Button>
+                        {data.cantidad > 1 ?
+                          <Button warning rounded onPress={() => { EditarCompra(data, this.state.infoAction, "remove") }}>
+                            <Icon name='md-remove' />
+                          </Button>
+                          : 
+                          null
+                        }
                         <Button danger rounded onPress={() => { EliminarCompra(data, this.state.infoAction) }}>
                           <Icon name='md-trash' />
                         </Button>
